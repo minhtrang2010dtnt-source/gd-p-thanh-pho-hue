@@ -15,56 +15,88 @@
                         hue: '#800000',
                         gold: '#f59e0b',
                         goldlight: '#fef3c7',
+                        royalbg: '#fffbeb'
                     }
                 }
             }
         }
     </script>
 
-    <!-- Thư viện Pháo hoa Confetti -->
+    <!-- Thư viện Pháo hoa Canvas-Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body class="bg-amber-50 text-gray-900 font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-royalbg text-gray-900 font-sans min-h-screen flex flex-col justify-between">
 
     <!-- HEADER HOÀNG GIA CỐ ĐÔ -->
-    <header class="bg-hue text-white shadow-2xl p-6 text-center border-b-4 border-gold relative">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-2xl md:text-4xl font-extrabold text-gold uppercase tracking-wider drop-shadow-md">
+    <header class="bg-hue text-white shadow-2xl p-6 text-center border-b-4 border-gold relative overflow-hidden">
+        <div class="max-w-5xl mx-auto relative z-10">
+            <h1 class="text-2xl md:text-4xl font-black text-gold uppercase tracking-widest drop-shadow-lg">
                 Giáo dục Địa phương tỉnh Thừa Thiên Huế
             </h1>
-            <p class="mt-2 text-amber-100 text-sm md:text-base font-medium">
-                Hệ thống Trò chơi Đố vui Tri thức Thiết thực (Khối 10 — 11 — 12)
+            <p class="mt-2 text-amber-100 text-sm md:text-base font-semibold tracking-wide">
+                Nền tảng Tra cứu Tri thức Trọng tâm & Thử thách Đố vui (Khối 10 — 11 — 12)
             </p>
         </div>
         
         <!-- NÚT BẬT / TẮT NHẠC NỀN -->
-        <button onclick="toggleAudio()" id="music-btn" class="absolute top-4 right-4 bg-gold hover:bg-yellow-400 text-hue font-extrabold px-3 py-1.5 rounded-full text-xs md:text-sm shadow-lg transition transform hover:scale-105 flex items-center gap-1">
+        <button onclick="toggleAudio()" id="music-btn" class="absolute top-4 right-4 bg-gold hover:bg-yellow-400 text-hue font-extrabold px-3 py-1.5 rounded-full text-xs md:text-sm shadow-xl transition transform hover:scale-105 flex items-center gap-1 z-20">
             🔊 <span id="music-text">Nhạc nền: Tắt</span>
         </button>
     </header>
 
     <!-- CONTAINER CHÍNH -->
-    <main class="max-w-4xl mx-auto my-6 p-4 w-full flex-grow">
+    <main class="max-w-5xl mx-auto my-6 p-4 w-full flex-grow">
 
-        <!-- THANH LỌC KHỐI LỚP & CHỦ ĐỀ BÀI HỌC -->
-        <div class="bg-white rounded-2xl shadow-md p-4 mb-6 border border-amber-200 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <!-- THANH ĐIỀU HƯỚNG LỌC KHỐI & CHỦ ĐỀ -->
+        <div class="bg-white rounded-3xl shadow-lg p-5 mb-6 border-2 border-amber-200 flex flex-col md:flex-row gap-4 items-center justify-between">
             <!-- Nút chọn Khối Lớp -->
             <div class="flex gap-2 flex-wrap justify-center">
-                <button onclick="selectGrade('10')" id="btn-g10" class="grade-btn bg-hue text-gold font-bold px-4 py-2 rounded-xl text-sm shadow hover:opacity-90">Khối 10</button>
-                <button onclick="selectGrade('11')" id="btn-g11" class="grade-btn bg-amber-100 text-amber-900 font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-gold">Khối 11</button>
-                <button onclick="selectGrade('12')" id="btn-g12" class="grade-btn bg-amber-100 text-amber-900 font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-gold">Khối 12</button>
+                <button onclick="selectGrade('10')" id="btn-g10" class="grade-btn bg-hue text-gold font-bold px-5 py-2.5 rounded-2xl text-sm shadow-md transition">Khối 10</button>
+                <button onclick="selectGrade('11')" id="btn-g11" class="grade-btn bg-amber-100 text-amber-900 font-bold px-5 py-2.5 rounded-2xl text-sm shadow hover:bg-gold transition">Khối 11</button>
+                <button onclick="selectGrade('12')" id="btn-g12" class="grade-btn bg-amber-100 text-amber-900 font-bold px-5 py-2.5 rounded-2xl text-sm shadow hover:bg-gold transition">Khối 12</button>
             </div>
 
             <!-- Danh sách Chủ đề Bài học -->
             <div class="w-full md:w-auto">
-                <select id="topic-select" onchange="changeTopic()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 font-bold py-2 px-3 rounded-xl text-sm focus:outline-none focus:border-hue">
-                    <!-- Được nạp tự động qua JavaScript -->
+                <select id="topic-select" onchange="changeTopic()" class="w-full bg-amber-50 border-2 border-amber-300 text-amber-900 font-extrabold py-2.5 px-4 rounded-2xl text-sm focus:outline-none focus:border-hue shadow-inner">
+                    <!-- Nạp tự động -->
                 </select>
             </div>
         </div>
 
-        <!-- KHUNG GAME ĐỐ VUI -->
-        <div id="quiz-container" class="bg-white rounded-3xl shadow-2xl border-2 border-amber-200 p-6 md:p-8 relative overflow-hidden">
+        <!-- THANH CHUYỂN TAB: KHIẾN THỨC TRỌNG TÂM vs ĐỐ VUI -->
+        <div class="flex justify-center gap-4 mb-6">
+            <button onclick="switchTab('knowledge')" id="tab-knowledge-btn" class="flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-hue text-gold shadow-xl border-2 border-gold transition transform hover:scale-105">
+                📖 1. Kiến thức Trọng tâm
+            </button>
+            <button onclick="switchTab('quiz')" id="tab-quiz-btn" class="flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-amber-100 text-amber-900 shadow border-2 border-amber-300 hover:bg-gold transition transform hover:scale-105">
+                🎮 2. Thử thách Đố vui (10 Câu)
+            </button>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 1: KHUNG KIẾN THỨC TRỌNG TÂM BÀI HỌC                        -->
+        <!-- =============================================================== -->
+        <div id="knowledge-tab" class="bg-white rounded-3xl shadow-2xl border-2 border-amber-200 p-6 md:p-8">
+            <div class="border-b border-amber-200 pb-4 mb-6 flex justify-between items-center">
+                <h2 id="knowledge-title" class="text-xl md:text-2xl font-black text-hue">
+                    📖 Tri thức Cốt lõi Bài học
+                </h2>
+                <span id="knowledge-badge" class="bg-amber-100 text-amber-900 font-bold px-3 py-1 rounded-full text-xs">
+                    Khối 10
+                </span>
+            </div>
+
+            <!-- NỘI DUNG TÓM TẮT TRI THỨC -->
+            <div id="knowledge-content" class="space-y-6 text-gray-800 leading-relaxed">
+                <!-- Nạp tự động bằng JS -->
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 2: KHUNG GAME ĐỐ VUI 10 CÂU                                 -->
+        <!-- =============================================================== -->
+        <div id="quiz-tab" class="bg-white rounded-3xl shadow-2xl border-2 border-amber-200 p-6 md:p-8 hidden relative overflow-hidden">
             
             <!-- THANH THÔNG TIN VÒNG CHƠI -->
             <div class="flex justify-between items-center border-b border-amber-100 pb-4 mb-4">
@@ -85,9 +117,9 @@
             </div>
 
             <!-- NỘI DUNG CÂU HỎI -->
-            <h2 id="question" class="text-lg md:text-xl font-bold text-gray-800 mb-4 leading-relaxed">
+            <h3 id="question" class="text-lg md:text-xl font-bold text-gray-800 mb-4 leading-relaxed">
                 Đang tải câu hỏi...
-            </h2>
+            </h3>
 
             <!-- KHUNG HÌNH ẢNH MINH HỌA -->
             <div id="image-container" class="mb-4 text-center hidden">
@@ -95,14 +127,14 @@
                 <p id="image-caption" class="text-xs text-gray-500 italic mt-1 font-medium"></p>
             </div>
 
-            <!-- CÁC ĐÁP ÁN (A, B, C, D HOẶC Ô NHẬP TỰ LUẬN) -->
+            <!-- CÁC ĐÁP ÁN (A, B, C, D) -->
             <div id="options" class="space-y-3">
                 <!-- Nạp tự động -->
             </div>
 
-            <!-- KHUNG GIẢI THÍCH TRI THỨC BÀI HỌC -->
+            <!-- GIẢI THÍCH TRI THỨC -->
             <div id="explanation-box" class="mt-6 p-4 bg-amber-50 rounded-2xl border border-amber-300 hidden">
-                <p class="font-bold text-hue text-sm mb-1 flex items-center gap-1">📘 Thông tin di sản & Tri thức bài học:</p>
+                <p class="font-bold text-hue text-sm mb-1 flex items-center gap-1">📘 Ghi chú bài học:</p>
                 <p id="explanation-text" class="text-sm text-gray-700 leading-relaxed"></p>
             </div>
 
@@ -116,84 +148,104 @@
 
     <!-- FOOTER TRANG WEB -->
     <footer class="bg-hue text-amber-200 text-center py-4 text-xs border-t-2 border-gold">
-        <p>© 2026 Dự án KHKT Website Giáo dục Địa phương Thừa Thiên Huế — Tổ 1 Lớp 11B2</p>
+        <p>© 2026 Dự án KHKT Website Giáo dục Địa phương Thừa Thiên Huế — Học sinh Tổ 1 Lớp 11B2</p>
     </footer>
 
     <!-- ================================================================= -->
-    <!-- CHƯƠNG TRÌNH XỬ LÝ DỮ LIỆU & LOGIC GAME                            -->
+    <!-- CHƯƠNG TRÌNH XỬ LÝ DỮ LIỆU CỐ ĐÔ & LOGIC HỆ THỐNG                  -->
     <!-- ================================================================= -->
     <script>
-        // CẤU TRÚC DỮ LIỆU 12 CHỦ ĐỀ (KHỐI 10, 11, 12 - MỖI CHỦ ĐỀ HÀNG LOẠT CÂU HỎI MỚI)
+        // CẤU TRÚC DỮ LIỆU 12 CHỦ ĐỀ CHUẨN (GỒM TRI THỨC TRỌNG TÂM & 10 CÂU HỎI CHUYÊN SÂU)
         const curriculumData = {
             "10": [
                 {
                     topic: "Danh thắng Sông Hương & Núi Ngự",
+                    summary: [
+                        { title: "Biểu tượng Tự nhiên - Văn hóa Huế", detail: "Sông Hương (dài 80km) kết hợp núi Ngự Bình (cao 105m) tạo nên bức bình phong thiên nhiên che chắn và định hình phong thủy cho Kinh thành Huế." },
+                        { title: "Hệ thống Cầu di sản", detail: "Các cây cầu nổi tiếng như cầu Ngói Thanh Toàn (thượng gia hạ kiều cổ kính), cầu Tràng Tiền (thiết kế bởi Eiffel), cầu Dã Viên, Bạch Hổ." },
+                        { title: "Hệ sinh thái Đầm phá Tam Giang - Cầu Hai", detail: "Rộng trên 22.000 ha, là hệ đầm phá nước lợ lớn nhất Đông Nam Á, giữ vai trò sinh thái và kinh tế quan trọng của tỉnh Thừa Thiên Huế." }
+                    ],
                     questions: [
                         { question: "Hai thực thể địa lý tự nhiên nào được coi là biểu tượng Cố đô Huế?", image: "https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=800", caption: "Sông Hương và núi Ngự Bình", options: ["Sông Hương & Núi Ngự Bình", "Sông Bồ & Núi Bạch Mã", "Sông Truồi & Hòn Vượn", "Sông Hương & Đèo Hải Vân"], answer: 0, explanation: "Sông Hương núi Ngự là cặp biểu tượng tự nhiên - văn hóa tiêu biểu của xứ Huế." },
-                        { question: "Chiều dài dòng Sông Hương chảy qua địa phận tỉnh Thừa Thiên Huế khoảng bao nhiêu km?", image: "", caption: "", options: ["Khoảng 50 km", "Khoảng 80 km", "Khoảng 120 km", "Khoảng 150 km"], answer: 1, explanation: "Dòng Sông Hương dài khoảng 80km, bắt nguồn từ dãy Trường Sơn tụ hội về bằng 2 nguồn Ta Trạch và Hữu Trạch." },
-                        { question: "Núi Ngự Bình có chiều cao khoảng bao nhiêu mét so với mực nước biển?", image: "", caption: "", options: ["55m", "105m", "205m", "500m"], answer: 1, explanation: "Núi Ngự Bình cao khoảng 105m, dạng hình thang cân đối như bức bình phong thiên nhiên che chắn cho Kinh thành." },
-                        { question: "Cây cầu cổ nào bắc qua sông Hương gắn liền với ca dao 'Cầu xóm Cụm..., chợ Ngói Thanh Toàn'?", image: "", caption: "", options: ["Cầu Tràng Tiền", "Cầu Ngói Thanh Toàn", "Cầu Dã Viên", "Cầu Bạch Hổ"], answer: 1, explanation: "Cầu Ngói Thanh Toàn ở thị xã Hương Thủy là công trình kiến trúc thượng gia hạ kiều quý hiếm." },
-                        { question: "Hệ thống sông ngòi Thừa Thiên Huế đổ ra biển Đông chủ yếu qua cửa biển nào?", image: "", caption: "", options: ["Cửa Thuận An & Cửa Tư Hiền", "Cửa Chân Mây", "Cửa Cảnh Dương", "Cửa Cần Giờ"], answer: 0, explanation: "Cửa Thuận An và Tư Hiền là hai cửa biển lịch sử quan trọng của Huế." },
-                        { question: "Vườn quốc gia Bạch Mã thuộc địa phận huyện nào của Thừa Thiên Huế?", image: "", caption: "", options: ["Huyện Phú Lộc", "Huyện Phong Điền", "Huyện Quảng Điền", "Huyện A Lưới"], answer: 0, explanation: "Vườn quốc gia Bạch Mã nằm trên địa bàn huyện Phú Lộc, nổi tiếng với dải khí hậu mát mẻ và đa dạng sinh học." },
-                        { question: "Đèo Hải Vân nối liền tỉnh Thừa Thiên Huế với thành phố nào?", image: "", caption: "", options: ["Đà Nẵng", "Quảng Nam", "Quảng Trị", "Quảng Bình"], answer: 0, explanation: "Đèo Hải Vân mệnh danh là 'Thiên hạ đệ nhất hùng quan' ngăn cách Thừa Thiên Huế và Đà Nẵng." },
-                        { question: "Đầm phá Tam Giang - Cầu Hai có đặc điểm gì nổi bật ở Châu Á?", image: "", caption: "", options: ["Là hệ đầm phá nước ngọt lớn nhất", "Là hệ đầm phá nước lợ lớn nhất Đông Nam Á", "Là hồ nhân tạo lớn nhất", "Là vịnh biển sâu nhất"], answer: 1, explanation: "Đầm phá Tam Giang - Cầu Hai rộng hơn 22.000 ha, là hệ đầm phá nước lợ lớn nhất Đông Nam Á." },
-                        { question: "Bãi biển nghỉ dưỡng nổi tiếng nào nằm ở phía nam tỉnh Thừa Thiên Huế?", image: "", caption: "", options: ["Bãi biển Lăng Cô", "Bãi biển Thuận An", "Bãi biển Cảnh Dương", "Bãi biển Vinh Thanh"], answer: 0, explanation: "Vịnh Lăng Cô được kết nạp vào Câu lạc bộ các vịnh biển đẹp nhất thế giới (Worldbays)." },
-                        { question: "Suối khoáng nóng nổi tiếng nào dùng để điều dưỡng ở Thừa Thiên Huế?", image: "", caption: "", options: ["Suối khoáng Thanh Tân", "Suối Mơ", "Suối Voi", "Suối Hạt Bàng"], answer: 0, explanation: "Suối khoáng nóng Thanh Tân (Phong Điền) là nguồn khoáng thiên nhiên quý giá của tỉnh." }
+                        { question: "Chiều dài dòng Sông Hương chảy qua địa phận Thừa Thiên Huế khoảng bao nhiêu km?", image: "", caption: "", options: ["Khoảng 50 km", "Khoảng 80 km", "Khoảng 120 km", "Khoảng 150 km"], answer: 1, explanation: "Dòng Sông Hương dài khoảng 80km, hợp thành từ hai nguồn Ta Trạch và Hữu Trạch." },
+                        { question: "Núi Ngự Bình có chiều cao khoảng bao nhiêu mét so với mực nước biển?", image: "", caption: "", options: ["55m", "105m", "205m", "500m"], answer: 1, explanation: "Núi Ngự Bình cao khoảng 105m, có hình dáng hình thang cân đối." },
+                        { question: "Cây cầu cổ nào ở Thừa Thiên Huế thuộc loại kiến trúc quý hiếm 'Thượng gia hạ kiều'?", image: "", caption: "", options: ["Cầu Tràng Tiền", "Cầu Ngói Thanh Toàn", "Cầu Dã Viên", "Cầu Bến Ngự"], answer: 1, explanation: "Cầu Ngói Thanh Toàn ở Hương Thủy là di tích kiến trúc nghệ thuật cấp quốc gia." },
+                        { question: "Đầm phá Tam Giang - Cầu Hai giữ kỷ lục nào ở khu vực Đông Nam Á?", image: "", caption: "", options: ["Đầm phá nước ngọt rộng nhất", "Hệ đầm phá nước lợ lớn nhất Đông Nam Á", "Vịnh biển sâu nhất", "Hồ nhân tạo rộng nhất"], answer: 1, explanation: "Đầm phá Tam Giang - Cầu Hai rộng hơn 22.000 ha, là hệ đầm phá nước lợ lớn nhất ĐNÁ." },
+                        { question: "Vườn quốc gia Bạch Mã thuộc địa phận huyện nào của Thừa Thiên Huế?", image: "", caption: "", options: ["Huyện Phú Lộc", "Huyện Phong Điền", "Huyện Nam Đông", "Huyện A Lưới"], answer: 0, explanation: "Vườn quốc gia Bạch Mã nằm ở huyện Phú Lộc, nổi tiếng với sự đa dạng sinh học cao." },
+                        { question: "Đèo Hải Vân nối liền tỉnh Thừa Thiên Huế với địa phương nào?", image: "", caption: "", options: ["Thành phố Đà Nẵng", "Tỉnh Quảng Nam", "Tỉnh Quảng Trị", "Tỉnh Quảng Bình"], answer: 0, explanation: "Đèo Hải Vân là ranh giới địa lý tự nhiên giữa Thừa Thiên Huế và Đà Nẵng." },
+                        { question: "Hai cửa biển chính tiêu biểu mở ra biển Đông của Thừa Thiên Huế là gì?", image: "", caption: "", options: ["Cửa Thuận An & Cửa Tư Hiền", "Cửa Chân Mây & Cửa Cảnh Dương", "Cửa Cần Giờ & Cửa Nhật Lệ", "Cửa Đại & Cửa Tùng"], answer: 0, explanation: "Cửa Thuận An và Tư Hiền là hai cửa biển chiến lược lịch sử của Cố đô." },
+                        { question: "Bãi biển nghỉ dưỡng nổi tiếng ở Phú Lộc từng gia nhập CLB Vịnh đẹp nhất thế giới?", image: "", caption: "", options: ["Bãi biển Lăng Cô", "Bãi biển Thuận An", "Bãi biển Cảnh Dương", "Bãi biển Vinh Thanh"], answer: 0, explanation: "Vịnh Lăng Cô được vinh danh trong danh sách các vịnh biển đẹp nhất thế giới." },
+                        { question: "Nguồn suối khoáng nóng thiên nhiên nổi tiếng phục vụ du lịch điều dưỡng ở Huế?", image: "", caption: "", options: ["Suối khoáng Thanh Tân", "Suối Voi", "Suối Mơ", "Suối Hạt Bàng"], answer: 0, explanation: "Suối khoáng nóng Thanh Tân (Phong Điền) cung cấp nguồn nước khoáng nóng thiên nhiên quý." }
                     ]
                 },
                 {
-                    topic: "Văn học & Giai thoại Dân gian Huế",
+                    topic: "Giai thoại & Văn học Dân gian Huế",
+                    summary: [
+                        { title: "Tính chất Truyện cười & Giai thoại Huế", detail: "Phản ánh tiếng cười trào lăm, sự thâm thúy, dí dỏm và trí tuệ hóm hỉnh của người dân Kinh kỳ." },
+                        { title: "Vè dân gian & Biến cố Lịch sử", detail: "Bài 'Vè Thất thủ Kinh đô' ghi lại biến cố lịch sử đau thương ngày 23/5 Ất Dậu (1885) với tinh thần yêu nước sâu sắc." },
+                        { title: "Ngôn ngữ địa phương đặc sắc", detail: "Hệ thống từ ngữ xưng hô thân thương 'Mô, Tê, Răng, Rứa' tạo nên bản sắc văn hóa giao tiếp Huế." }
+                    ],
                     questions: [
-                        { question: "Thể loại văn học dân gian nào ở Huế nổi tiếng với tính trào lăm, hóm hỉnh sâu sắc?", image: "", caption: "", options: ["Giai thoại & Truyện cười dân gian Huế", "Sử thi truyền miệng", "Truyện cổ tích thần kỳ", "Thơ lục bát phong cách Bắc Bộ"], answer: 0, explanation: "Truyện cười và giai thoại Huế phản ánh nét tâm hồn vừa hài hước vừa thâm thúy của con người Cố đô." },
-                        { question: "Bài vè dân gian nổi tiếng nào phản ánh sự kiện lịch sử năm 1885 tại Huế?", image: "", caption: "", options: ["Vè Thất thủ Kinh đô", "Vè Thầy pháp", "Vè Chợ Đông Ba", "Vè Đánh giặc"], answer: 0, explanation: "Vè Thất thủ Kinh đô ghi lại biến cố lịch sử đẫm máu đêm 23 tháng 5 năm Ất Dậu (1885)." },
-                        { question: "Điệu hò nổi tiếng nào gắn liền với hoạt động chèo thuyền trên sông nước Huế?", image: "", caption: "", options: ["Hò Mái Nhì", "Hò Đồng Tháp", "Hò Bát Náo", "Hò Khoan Lệ Thủy"], answer: 0, explanation: "Hò Mái Nhì với giai điệu dàn trải, mênh mang gắn liền với dòng sông Hương và tâm sự người Huế." },
-                        { question: "Dân tộc thiểu số nào ở A Lưới sở hữu kho tàng ca dao, dân ca độc đáo?", image: "", caption: "", options: ["Dân tộc Pa Cô & Tà Ôi", "Dân tộc Mường", "Dân tộc Thái", "Dân tộc Ede"], answer: 0, explanation: "Đồng bào Pa Cô, Tà Ôi, Cơ Tu ở miền núi A Lưới có kho tàng văn hóa dân gian vô cùng phong phú." },
-                        { question: "Nhà thơ nổi tiếng nào của triều Nguyễn được mệnh danh là danh nhân thi văn xứ Huế?", image: "", caption: "", options: ["Tùng Thiện Vương Miên Thẩm", "Cao Bá Quát", "Nguyễn Du", "Hồ Xuân Hương"], answer: 0, explanation: "Tùng Thiện Vương là nhà thơ kiệt xuất hàng đầu thời Nguyễn." },
-                        { question: "Câu ca dao 'Chợ Đông Ba giả giục lòng ai / Nỗi niềm...' nhắc đến địa danh nào?", image: "", caption: "", options: ["Chợ Đông Ba", "Chợ An Cựu", "Chợ Bến Ngự", "Chợ Nọ"], answer: 0, explanation: "Chợ Đông Ba là khu chợ thương mại lâu đời và sầm uất bậc nhất Huế." },
-                        { question: "Từ ngữ địa phương nào sau đây mang đậm bản sắc ngôn ngữ Huế?", image: "", caption: "", options: ["Mô, Tê, Răng, Rứa", "Thì, Là, Mà, Với", "Bấm, Té, Nhát, Hết", "Này, Nọ, Kia, Đó"], answer: 0, explanation: "Các từ ngữ 'Mô, Tê, Răng, Rứa' là nét đặc trưng ngôn ngữ thân thương của người Huế." },
-                        { question: "Nghệ thuật nói giảm nói tránh nhẹ nhàng là đặc điểm tâm lý của cư dân vùng nào?", image: "", caption: "", options: ["Cư dân Cố đô Huế", "Cư dân Nam Bộ", "Cư dân Tây Bắc", "Cư dân Tây Nguyên"], answer: 0, explanation: "Người Huế nổi tiếng với phong cách ứng xử tinh tế, lịch sự và giữ kẽ nhẹ nhàng." },
-                        { question: "Dấu ấn văn hóa Phật giáo trong thơ ca Huế thể hiện rõ qua tiếng chuông ngôi chùa nào?", image: "", caption: "", options: ["Chùa Thiên Mụ", "Chùa Từ Đàm", "Chùa Quốc Ân", "Chùa Báo Quốc"], answer: 0, explanation: "Tiếng chuông chùa Thiên Mụ đã đi vào nhiều bài ca dao, thơ ca thiêng liêng." },
-                        { question: "Trang phục truyền thống được coi là biểu tượng vẻ đẹp thiếu nữ Huế?", image: "", caption: "", options: ["Áo dài ngũ thân / Áo dài tím", "Áo tứ thân", "Áo bà ba", "Trang phục Thổ cẩm"], answer: 0, explanation: "Áo dài tím Huế tượng trưng cho sự trang nhã, thủy chung của người phụ nữ Cố đô." }
+                        { question: "Thể loại văn học dân gian nào ở Huế nổi tiếng với tính trào lăm, hóm hỉnh thâm thúy?", image: "", caption: "", options: ["Giai thoại & Truyện cười dân gian Huế", "Sử thi dài", "Thần thoại biển", "Truyện cổ tích thần kỳ"], answer: 0, explanation: "Giai thoại và truyện cười Huế hiện lên với nét hài hước sâu sắc của con người Cố đô." },
+                        { question: "Bài vè dân gian ghi lại sự kiện lịch sử đau thương năm 1885 tại Huế tên là gì?", image: "", caption: "", options: ["Vè Thất thủ Kinh đô", "Vè Thầy pháp", "Vè Chợ Đông Ba", "Vè Đánh giặc"], answer: 0, explanation: "Vè Thất thủ Kinh đô ghi lại biến cố lịch sử đêm 23 tháng 5 năm Ất Dậu." },
+                        { question: "Điệu hò gắn liền với đời sống sông nước và tâm sự dịu dàng của người Huế?", image: "", caption: "", options: ["Hò Mái Nhì", "Hò Đồng Tháp", "Hò Khoan Lệ Thủy", "Hò Bát Náo"], answer: 0, explanation: "Hò Mái Nhì dàn trải mênh mang gắn liền với con nước Sông Hương." },
+                        { question: "Bộ từ ngữ địa phương Huế tiêu biểu cho giao tiếp thân thương?", image: "", caption: "", options: ["Mô, Tê, Răng, Rứa", "Thì, Là, Mà, Với", "Bấm, Té, Nhát, Hết", "Này, Nọ, Kia, Đó"], answer: 0, explanation: "'Mô, Tê, Răng, Rứa' là nhóm từ ngữ địa phương đặc trưng của xứ Huế." },
+                        { question: "Đồng bào dân tộc thiểu số nào ở A Lưới sở hữu làn điệu Ka-lới, Cha-chấp độc đáo?", image: "", caption: "", options: ["Dân tộc Pa Cô & Tà Ôi", "Dân tộc Mường", "Dân tộc Thái", "Dân tộc Ede"], answer: 0, explanation: "Đồng bào Pa Cô, Tà Ôi ở A Lưới có kho tàng dân ca vô cùng phong phú." },
+                        { question: "Trang phục truyền thống được coi là di sản và vẻ đẹp nét tím đặc trưng Huế?", image: "", caption: "", options: ["Áo dài Huế (Áo dài tím/Ngũ thân)", "Áo tứ thân", "Áo bà ba", "Trang phục Thổ cẩm"], answer: 0, explanation: "Áo dài tím Huế tượng trưng cho sự trang nhã, thủy chung của người phụ nữ Cố đô." },
+                        { question: "Ngôi chợ thương mại lâu đời nằm bên bờ sông Hương gắn liền với ca dao Huế?", image: "", caption: "", options: ["Chợ Đông Ba", "Chợ An Cựu", "Chợ Bến Ngự", "Chợ Nọ"], answer: 0, explanation: "Chợ Đông Ba là khu chợ biểu tượng sầm uất lâu đời của đất Cố đô." },
+                        { question: "Nét đặc điểm tâm lý ứng xử nổi tiếng của người dân xứ Huế?", image: "", caption: "", options: ["Nhẹ nhàng, tinh tế, kín kẽ", "Bộc bạch, ồn ào", "Nhanh gấp, vội vã", "Cứng nhắc, nghiêm nghị"], answer: 0, explanation: "Người Huế nổi tiếng với sự nhẹ nhàng, tinh tế và lòng mến khách." },
+                        { question: "Hình ảnh tiếng chuông chùa nào đi vào thơ ca dân gian Huế thiêng liêng?", image: "", caption: "", options: ["Chuông chùa Thiên Mụ", "Chuông chùa Từ Đàm", "Chuông chùa Quốc Ân", "Chuông chùa Báo Quốc"], answer: 0, explanation: "Tiếng chuông chùa Thiên Mụ vang vọng không gian sông Hương linh thiêng." },
+                        { question: "Thể loại hát ru Huế mang đậm âm hưởng dân ca miền Trung tên là gì?", image: "", caption: "", options: ["Hát ru Huế", "Hát Xoan", "Hát Quan họ", "Hát Then"], answer: 0, explanation: "Hát ru Huế ngọt ngào, sâu lắng nuôi dưỡng tâm hồn bao thế hệ." }
                     ]
                 }
             ],
             "11": [
                 {
-                    topic: "Nhã nhạc & Ca Huế",
+                    topic: "Nhã nhạc & Ca Huế di sản",
+                    summary: [
+                        { title: "Nhã nhạc Cung đình Huế (UNESCO 2003)", detail: "Kiệt tác Di sản Phi vật thể Thế giới đầu tiên của Việt Nam. Là âm nhạc chính thống triều đình phục vụ đại lễ và nghi thức quốc gia." },
+                        { title: "Nghệ thuật Ca Huế trên sông Hương", detail: "Di sản phi vật thể quốc gia. Sử dụng dàn nhạc Ngũ tuyệt (Tranh, Tỳ, Nhị, Nguyệt, Tam) biểu diễn sinh động trên thuyền rồng đêm." },
+                        { title: "Hệ thống bài bản phong phú", detail: "Phân chia rõ ràng thành nhạc lễ Cung đình (Đại nhạc, Tiểu nhạc) và làn điệu Ca Huế dân gian tinh tế." }
+                    ],
                     questions: [
-                        { question: "Nhã nhạc Cung đình Huế được UNESCO vinh danh là Di sản Phi vật thể Thế giới vào năm nào?", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800", caption: "Biểu diễn Nhã nhạc Cung đình Huế", options: ["Năm 1993", "Năm 2003", "Năm 2010", "Năm 2015"], answer: 1, explanation: "Tháng 11/2003, Nhã nhạc Cung đình Huế trở thành Di sản Phi vật thể đầu tiên của Việt Nam được UNESCO vinh danh." },
-                        { question: "Bộ ngũ tuyệt trong dàn nhạc Ca Huế bao gồm các nhạc cụ nào?", image: "", caption: "", options: ["Tranh, Tỳ, Nhị, Nguyệt, Tam", "Guitar, Organ, Drum, Bass, Sax", "Sáo, Kèn, Trống, Chiêng, Cồng", "Đàn Bầu, Đàn Đá, Đàn T'rưng, Đáy, Cò"], answer: 0, explanation: "Dàn ngũ tuyệt cổ điển của Ca Huế gồm Đàn Tranh, Tỳ Bà, Nhị, Nguyệt và Tam." },
-                        { question: "Ca Huế trên sông Hương thường được tổ chức không gian biểu diễn ở đâu?", image: "", caption: "", options: ["Trên thuyền rồng chạy trên sông Hương", "Trong nhà hát lớn", "Tại sân đình", "Tại quảng trường"], answer: 0, explanation: "Thưởng thức Ca Huế trên thuyền rồng ban đêm trên dòng Hương Giang là trải nghiệm văn hóa đặc sắc." },
-                        { question: "Nhã nhạc triều Nguyễn chia thành 2 dạng dàn nhạc chính là gì?", image: "", caption: "", options: ["Đại nhạc & Nhã nhạc (Tiểu nhạc)", "Dàn nhạc Giao hưởng & Nhạc nhẹ", "Nhạc lễ & Nhạc tang", "Hò & Lý"], answer: 0, explanation: "Đại nhạc dùng kèn, trống lớn trong lễ đại triều; Tiểu nhạc dùng các nhạc cụ dây, sáo." },
-                        { question: "Loại kèn nào là nhạc cụ chủ đạo trong dàn Đại nhạc triều Nguyễn?", image: "", caption: "", options: ["Kèn Loa (Kèn Bầu)", "Kèn Saxophone", "Kèn Clarinet", "Kèn Trumpet"], answer: 0, explanation: "Kèn Bầu có âm thanh vang dội, uy nghiêm dùng trong lễ tế Giao và các đại lễ Cung đình." },
-                        { question: "Điệu lý nào sau đây mang đậm dấu ấn âm nhạc dân gian Thừa Thiên Huế?", image: "", caption: "", options: ["Lý Mười Thương", "Lý Cây Đa", "Lý Ngựa Ô Nam Bộ", "Lý Ngựa Ô Bắc Bộ"], answer: 0, explanation: "Lý Mười Thương miêu tả 10 nét đẹp duyên dáng của người con gái xứ Huế." },
-                        { question: "Trang phục của nghệ sĩ biểu diễn Ca Huế truyền thống là gì?", image: "", caption: "", options: ["Áo dài truyền thống", "Trang phục dạ hội", "Trang phục dân tộc thiểu số", "Áo quần tây"], answer: 0, explanation: "Các nữ ca công mặc áo dài truyền thống tao nhã, các nam nhạc công mặc áo dài khăn đóng." },
-                        { question: "Nhạc cụ duy nhất chỉ có 1 dây độc đáo trong âm nhạc truyền thống Việt Nam?", image: "", caption: "", options: ["Đàn Bầu (Độc huyền cầm)", "Đàn Tranh", "Đàn Nhị", "Đàn Nguyệt"], answer: 0, explanation: "Đàn Bầu phát ra âm thanh ngân vang quyến rũ bằng que gảy và cần điều khiển cao độ." },
-                        { question: "Môi trường diễn xướng ban đầu của Nhã nhạc là ở đâu?", image: "", caption: "", options: ["Trong Cung điện & Lăng tẩm triều Nguyễn", "Tại làng quê", "Tại các bến sông", "Trong chùa"], answer: 0, explanation: "Nhã nhạc là âm nhạc chính thống triều đình phục vụ vua chúa và các đại lễ quốc gia." },
-                        { question: "Bộ nhịp dùng bằng sảnh sứ hoặc tiền đồng trong Ca Huế gọi là gì?", image: "", caption: "", options: ["Sênh tiền & Phách", "Trống cơm", "Chiêng đồng", "Chuông gió"], answer: 0, explanation: "Sênh tiền và phách chén gõ nhịp giữ nhịp điệu rộn ràng cho các bài Ca Huế." }
+                        { question: "Nhã nhạc Cung đình Huế được UNESCO vinh danh là Di sản Phi vật thể vào năm nào?", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800", caption: "Biểu diễn Nhã nhạc Cung đình Huế", options: ["1993", "2003", "2010", "2015"], answer: 1, explanation: "Tháng 11/2003, Nhã nhạc Huế trở thành Di sản Phi vật thể đầu tiên của Việt Nam được vinh danh." },
+                        { question: "Bộ Ngũ tuyệt trong dàn nhạc Ca Huế truyền thống bao gồm nhạc cụ nào?", image: "", caption: "", options: ["Tranh, Tỳ, Nhị, Nguyệt, Tam", "Guitar, Organ, Drum, Bass, Sax", "Sáo, Kèn, Trống, Chiêng, Cồng", "Đàn Bầu, Đàn Đá, Đàn Đáy, Cò, Nhị"], answer: 0, explanation: "Dàn Ngũ tuyệt cổ điển gồm Đàn Tranh, Tỳ Bà, Nhị, Nguyệt và Đàn Tam." },
+                        { question: "Môi trường diễn xướng độc đáo nổi tiếng của Ca Huế là ở đâu?", image: "", caption: "", options: ["Trên thuyền rồng ngắm cảnh sông Hương ban đêm", "Trong nhà hát kịch", "Tại quảng trường", "Tại sân vận động"], answer: 0, explanation: "Ca Huế trên thuyền rồng bồng bềnh sông Hương là nét văn hóa tao nhã nổi tiếng." },
+                        { question: "Dàn nhạc dùng trong lễ tế Giao và Đại lễ Cung đình sử dụng kèn lớn gọi là gì?", image: "", caption: "", options: ["Đại nhạc", "Tiểu nhạc", "Ca Huế", "Nhạc tang"], answer: 0, explanation: "Đại nhạc có âm thanh vang dội uy nghiêm phục vụ các đại lễ triều đình." },
+                        { question: "Nhạc cụ chủ đạo mang tiếng kèn vang rực trong dàn Đại nhạc là gì?", image: "", caption: "", options: ["Kèn Bầu (Kèn Loa)", "Kèn Saxophone", "Kèn Trumpet", "Flute"], answer: 0, explanation: "Kèn Bầu mang giai điệu trang trọng trong âm nhạc nghi lễ Cung đình." },
+                        { question: "Điệu Lý nổi tiếng ca ngợi 10 nét đẹp duyên dáng người con gái Huế?", image: "", caption: "", options: ["Lý Mười Thương", "Lý Cây Đa", "Lý Ngựa Ô", "Lý Hoài Nam"], answer: 0, explanation: "Lý Mười Thương là điệu lý ngọt ngào tiêu biểu cho tâm hồn người Huế." },
+                        { question: "Trang phục chuẩn của các nghệ sĩ nữ khi biểu diễn Ca Huế di sản?", image: "", caption: "", options: ["Áo dài truyền thống", "Váy dạ hội", "Quần tây áo sơ mi", "Trang phục dân tộc thiểu số"], answer: 0, explanation: "Áo dài truyền thống giúp tôn lên nét trang trọng và tao nhã của Ca Huế." },
+                        { question: "Nhạc cụ 1 dây độc đáo tạo nên tiếng ngân quyến rũ trong âm nhạc Huế?", image: "", caption: "", options: ["Đàn Bầu (Độc huyền cầm)", "Đàn Tranh", "Đàn Nhị", "Đàn Nguyệt"], answer: 0, explanation: "Đàn Bầu mang âm sắc sâu lắng độc nhất vô nhị của âm nhạc Việt Nam." },
+                        { question: "Bộ phách gõ bằng sành sứ hoặc tiền đồng trong Ca Huế gọi là gì?", image: "", caption: "", options: ["Sênh tiền & Phách chén", "Trống cơm", "Chiêng đồng", "Mõ gỗ"], answer: 0, explanation: "Phách chén gõ nhịp giữ tiết tấu nhịp nhàng cho nghệ sĩ diễn xướng." },
+                        { question: "Nhã nhạc triều Nguyễn từng biểu diễn chủ yếu tại địa điểm nào ngày xưa?", image: "", caption: "", options: ["Trong Cung điện & Lăng tẩm triều Nguyễn", "Tại các chợ", "Tại làng quê", "Tại bến cảng"], answer: 0, explanation: "Nhã nhạc phục vụ hoàng gia trong không gian Cung điện triều Nguyễn." }
                     ]
                 }
             ],
             "12": [
                 {
-                    topic: "Quần thể Di tích & Đô thị Di sản",
+                    topic: "Quần thể Di tích & Đô thị Di sản Huế",
+                    summary: [
+                        { title: "Quần thể Di tích Cố đô Huế (UNESCO 1993)", detail: "Di sản Văn hóa Thế giới đầu tiên của Việt Nam. Bao gồm hệ thống Kinh thành, Hoàng thành (Đại Nội), Tử Cấm Thành và hệ thống Lăng tẩm các Vua Nguyễn." },
+                        { title: "Kiến trúc Nhà Rường & Chùa Cổ", detail: "Nhà Rường gỗ kết cấu mộng khớp không đinh hòa quyện thiên nhiên. Chùa Thiên Mụ (1601) biểu tượng thiêng liêng." },
+                        { title: "Đô thị thông minh Hue-S & Phát triển Xanh", detail: "Thừa Thiên Huế hướng tới Đô thị Di sản trực thuộc Trung ương (Nghị quyết 54-NQ/TW) kết hợp Chuyển đổi số hiện đại." }
+                    ],
                     questions: [
-                        { question: "Quần thể Di tích Cố đô Huế được UNESCO công nhận là Di sản Văn hóa Thế giới năm nào?", image: "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?w=800", caption: "Đại Nội Huế - Quần thể di tích Cố đô", options: ["1990", "1993", "2000", "2005"], answer: 1, explanation: "Năm 1993, Cố đô Huế trở thành Di sản Văn hóa Thế giới đầu tiên của Việt Nam." },
-                        { question: "Cổng chính phía nam của Hoàng thành Huế có tên gọi là gì?", image: "", caption: "", options: ["Ngọ Môn", "Hiển Nhơn", "Chương Đức", "Hòa Bình"], answer: 0, explanation: "Ngọ Môn là đài cổng chính uy nghi dành riêng cho Vua đi lại và tổ chức các lễ duyệt binh, Lễ Ban sóc." },
-                        { question: "Ngôi chùa cổ kính nổi tiếng nhất tựa lưng bên sông Hương được xây dựng từ năm 1601?", image: "", caption: "", options: ["Chùa Thiên Mụ", "Chùa Từ Đàm", "Chùa Báo Quốc", "Chùa Huyền Không"], answer: 0, explanation: "Chùa Thiên Mụ (Linh Mụ) do Chúa Nguyễn Hoàng xây dựng năm 1601 trên đồi Hà Khê." },
-                        { question: "Kiến trúc nhà ở truyền thống nét đặc sắc của văn hóa Cố đô Huế là gì?", image: "", caption: "", options: ["Nhà Rường - Nhà Vườn", "Nhà Sàn", "Nhà Ống hiện đại", "Nhà Biệt thự kiểu Pháp"], answer: 0, explanation: "Nhà Rường Huế được làm bằng gỗ chắc chắn với hệ thống cột kèo không dùng đinh, hòa quyện với vườn cây xanh mát." },
-                        { question: "Lăng tẩm nào có kiến trúc kết hợp đông tây kim cổ độc đáo nhất triều Nguyễn?", image: "", caption: "", options: ["Lăng Khải Định", "Lăng Minh Mạng", "Lăng Tự Đức", "Lăng Gia Long"], answer: 0, explanation: "Lăng Khải Định (Ứng Lăng) nổi tiếng với nghệ thuật khảm sành sứ rực rỡ và công trình xi măng Pháp." },
-                        { question: "Ứng dụng di động đô thị thông minh hàng đầu của tỉnh Thừa Thiên Huế là gì?", image: "", caption: "", options: ["Hue-S", "Hue-Connect", "Smart-Hue", "Hue-App"], answer: 0, explanation: "Hue-S là siêu ứng dụng dịch vụ đô thị thông minh giúp kết nối chính quyền và người dân Thừa Thiên Huế." },
-                        { question: "Mục tiêu định hướng theo Nghị quyết 54-NQ/TW đối với Thừa Thiên Huế là trở thành loại hình đô thị nào?", image: "", caption: "", options: ["Thành phố trực thuộc Trung ương trên nền tảng di sản, văn hóa, sinh thái", "Khu kinh tế công nghiệp nặng", "Trung tâm thương mại tự do", "Đô thị cảng biển công nghiệp"], answer: 0, explanation: "Xây dựng Thừa Thiên Huế trở thành Đô thị Di sản trực thuộc Trung ương mang bản sắc văn hóa sinh thái." },
-                        { question: "Chủ đề Festival Huế được tổ chức định kỳ mang tầm quốc tế thuộc lĩnh vực nào?", image: "", caption: "", options: ["Festival Văn hóa - Nghệ thuật", "Festival Thể thao", "Festival Ẩm thực đường phố", "Festival Công nghệ số"], answer: 0, explanation: "Festival Huế là hội tụ giao lưu văn hóa nghệ thuật đương đại và di sản quốc tế." },
-                        { question: "Chiếc đỉnh đồng lớn nhất mang tên quốc hiệu Việt Nam trong Cửu Đỉnh ở Đại Nội là gì?", image: "", caption: "", options: ["Cao Đỉnh", "Nhân Đỉnh", "Thuần Đỉnh", "Anh Đỉnh"], answer: 0, explanation: "Cao Đỉnh đặt ở vị trí trung tâm đại diện cho Vua Gia Long và quốc hiệu Việt Nam." },
-                        { question: "Cây cầu có kiến trúc độc đáo mang biểu tượng hoa sen bắc qua sông Hương vừa hoàn thành gần đây?", image: "", caption: "", options: ["Cầu Dã Viên", "Cầu Tuần", "Cầu Bến Ngự", "Cầu Tràng Tiền"], answer: 0, explanation: "Cầu Dã Viên mang đậm phong cách kiến trúc Huế mềm mại hài hòa với cảnh quan." }
+                        { question: "Quần thể Di tích Cố đô Huế được UNESCO công nhận là Di sản Văn hóa Thế giới năm nào?", image: "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?w=800", caption: "Đại Nội Huế - Di sản Thế giới", options: ["1990", "1993", "2000", "2005"], answer: 1, explanation: "Năm 1993, Cố đô Huế trở thành Di sản Văn hóa Thế giới đầu tiên của Việt Nam." },
+                        { question: "Cổng chính phía nam Hoàng thành Huế nơi diễn ra Lễ Ban sóc và duyệt binh?", image: "", caption: "", options: ["Ngọ Môn", "Hiển Nhơn", "Chương Đức", "Hòa Bình"], answer: 0, explanation: "Ngọ Môn là đài cổng chính uy nghi dành riêng cho Vua triều Nguyễn." },
+                        { question: "Ngôi chùa cổ danh tiếng dựng năm 1601 bên bờ sông Hương?", image: "", caption: "", options: ["Chùa Thiên Mụ", "Chùa Từ Đàm", "Chùa Báo Quốc", "Chùa Huyền Không"], answer: 0, explanation: "Chùa Thiên Mụ do Chúa Nguyễn Hoàng khởi dựng năm 1601 trên đồi Hà Khê." },
+                        { question: "Kiến trúc nhà ở gỗ truyền thống hòa hợp thiên nhiên đặc sặc xứ Huế?", image: "", caption: "", options: ["Nhà Rường - Nhà Vườn", "Nhà Sàn", "Nhà Ống", "Biệt thự Pháp"], answer: 0, explanation: "Nhà Rường Huế là đỉnh cao nghệ thuật kiến trúc nhà ở dân gian truyền thống." },
+                        { question: "Lăng tẩm có nghệ thuật khảm sành sứ đông tây kết hợp lộng lẫy nhất?", image: "", caption: "", options: ["Lăng Khải Định", "Lăng Minh Mạng", "Lăng Tự Đức", "Lăng Gia Long"], answer: 0, explanation: "Lăng Khải Định nổi tiếng với nghệ thuật khảm sành sứ rực rỡ bậc nhất." },
+                        { question: "Siêu ứng dụng di động Đô thị thông minh xuất sắc của Thừa Thiên Huế?", image: "", caption: "", options: ["Hue-S", "Hue-Connect", "Smart-Hue", "Hue-App"], answer: 0, explanation: "Hue-S là ứng dụng tiện ích kết nối chính quyền số và người dân Thừa Thiên Huế." },
+                        { question: "Mục tiêu xây dựng Thừa Thiên Huế theo Nghị quyết 54-NQ/TW của Bộ Chính trị?", image: "", caption: "", options: ["Thành phố trực thuộc TW trên nền tảng Di sản, Văn hóa, Sinh thái", "Khu công nghiệp nặng", "Trung tâm thương mại tự do", "Đô thị cảng biển công nghiệp"], answer: 0, explanation: "Phát triển Thừa Thiên Huế thành Đô thị Di sản trực thuộc Trung ương độc đáo." },
+                        { question: "Lễ hội văn hóa quốc tế lớn được tổ chức định kỳ tại Huế?", image: "", caption: "", options: ["Festival Huế", "Festival Biển", "Festival Cồng chiêng", "Festival Pháo hoa"], answer: 0, explanation: "Festival Huế là thương hiệu lễ hội văn hóa nghệ thuật tầm cỡ quốc tế." },
+                        { question: "Chiếc đỉnh đồng lớn nhất mang quốc hiệu Việt Nam trong Cửu Đỉnh tại Đại Nội?", image: "", caption: "", options: ["Cao Đỉnh", "Nhân Đỉnh", "Thuần Đỉnh", "Anh Đỉnh"], answer: 0, explanation: "Cao Đỉnh tượng trưng cho sự nghiệp Vua Gia Long và quốc hiệu Việt Nam." },
+                        { question: "Cây cầu bắc qua sông Hương mang dáng dấp kiến trúc hoa sen mềm mại?", image: "", caption: "", options: ["Cầu Dã Viên", "Cầu Tuần", "Cầu Bến Ngự", "Cầu Tràng Tiền"], answer: 0, explanation: "Cầu Dã Viên nối hai bờ sông Hương hòa hợp cảnh quan Cố đô." }
                     ]
                 }
             ]
         };
 
-        // TRẠNG THÁI GAME
+        // QỦAN LÝ TRẠNG THÁI HỆ THỐNG
         let currentGrade = "10";
         let currentTopicIdx = 0;
         let activeQuestions = [];
@@ -202,32 +254,30 @@
         let timerInterval;
         let timeLeft = 20;
 
-        // ÂM THANH NHẠC NỀN
+        // NHẠC NỀN AUDIO
         const bgMusic = new Audio('[suspicious link removed]');
         bgMusic.loop = true;
         bgMusic.volume = 0.25;
         let isMuted = true;
 
-        // TẢI BAN ĐẦU
+        // KHỞI CHẠY TRANG WEB
         window.onload = function() {
             selectGrade('10');
         };
 
-        // ĐỔI KHỐI LỚP
+        // CHỌN KHỐI LỚP
         function selectGrade(grade) {
             currentGrade = grade;
             
-            // Đổi style button
             ['10', '11', '12'].forEach(g => {
                 const btn = document.getElementById(`btn-g${g}`);
                 if (g === grade) {
-                    btn.className = "grade-btn bg-hue text-gold font-bold px-4 py-2 rounded-xl text-sm shadow hover:opacity-90";
+                    btn.className = "grade-btn bg-hue text-gold font-bold px-5 py-2.5 rounded-2xl text-sm shadow-md transition";
                 } else {
-                    btn.className = "grade-btn bg-amber-100 text-amber-900 font-bold px-4 py-2 rounded-xl text-sm shadow hover:bg-gold";
+                    btn.className = "grade-btn bg-amber-100 text-amber-900 font-bold px-5 py-2.5 rounded-2xl text-sm shadow hover:bg-gold transition";
                 }
             });
 
-            // Nạp danh sách Topic
             const select = document.getElementById('topic-select');
             select.innerHTML = '';
             curriculumData[grade].forEach((t, idx) => {
@@ -238,25 +288,69 @@
             });
 
             currentTopicIdx = 0;
-            startQuiz();
+            renderTopicData();
         }
 
         // ĐỔI CHỦ ĐỀ
         function changeTopic() {
             currentTopicIdx = parseInt(document.getElementById('topic-select').value);
-            startQuiz();
+            renderTopicData();
         }
 
-        // BẮT ĐẦU GAME
-        function startQuiz() {
-            activeQuestions = curriculumData[currentGrade][currentTopicIdx].questions;
+        // NẠP DỮ LIỆU CHỦ ĐỀ CHO CẢ 2 TAB
+        function renderTopicData() {
+            const currentTopic = curriculumData[currentGrade][currentTopicIdx];
+
+            // 1. Nạp dữ liệu Tab Kiến thức Trọng tâm
+            document.getElementById('knowledge-title').innerText = `📖 Tri thức Cốt lõi: ${currentTopic.topic}`;
+            document.getElementById('knowledge-badge').innerText = `Khối ${currentGrade}`;
+
+            const knowledgeBox = document.getElementById('knowledge-content');
+            knowledgeBox.innerHTML = '';
+            currentTopic.summary.forEach((sum, idx) => {
+                const card = document.createElement('div');
+                card.className = "p-5 bg-amber-50/70 rounded-2xl border border-amber-200 shadow-sm hover:border-gold transition";
+                card.innerHTML = `
+                    <h4 class="font-extrabold text-hue text-base md:text-lg mb-2 flex items-center gap-2">
+                        <span class="bg-hue text-gold w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shadow">${idx + 1}</span>
+                        ${sum.title}
+                    </h4>
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed font-medium pl-9">${sum.detail}</p>
+                `;
+                knowledgeBox.appendChild(card);
+            });
+
+            // 2. Prepare Game đố vui
+            activeQuestions = currentTopic.questions;
             currentIdx = 0;
             score = 0;
             document.getElementById('score').innerText = score;
             loadQuestion();
         }
 
-        // TẢI CÂU HỎI
+        // CHUYỂN ĐỔI TAB (KIẾN THỨC <-> ĐỐ VUI)
+        function switchTab(tabName) {
+            const kTab = document.getElementById('knowledge-tab');
+            const qTab = document.getElementById('quiz-tab');
+            const kBtn = document.getElementById('tab-knowledge-btn');
+            const qBtn = document.getElementById('tab-quiz-btn');
+
+            if (tabName === 'knowledge') {
+                kTab.classList.remove('hidden');
+                qTab.classList.add('hidden');
+                kBtn.className = "flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-hue text-gold shadow-xl border-2 border-gold transition transform hover:scale-105";
+                qBtn.className = "flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-amber-100 text-amber-900 shadow border-2 border-amber-300 hover:bg-gold transition transform hover:scale-105";
+                clearInterval(timerInterval);
+            } else {
+                qTab.classList.remove('hidden');
+                kTab.classList.add('hidden');
+                qBtn.className = "flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-hue text-gold shadow-xl border-2 border-gold transition transform hover:scale-105";
+                kBtn.className = "flex-1 max-w-xs py-3 px-6 rounded-2xl font-black text-sm md:text-base bg-amber-100 text-amber-900 shadow border-2 border-amber-300 hover:bg-gold transition transform hover:scale-105";
+                startTimer();
+            }
+        }
+
+        // LOAD CÂU HỎI GAME
         function loadQuestion() {
             startTimer();
             
@@ -269,7 +363,7 @@
             document.getElementById('category-badge').innerText = curriculumData[currentGrade][currentTopicIdx].topic;
             document.getElementById('question').innerText = `Câu ${currentIdx + 1}/${activeQuestions.length}: ${q.question}`;
 
-            // Hình ảnh
+            // Hình ảnh minh họa
             const imgContainer = document.getElementById('image-container');
             const imgTag = document.getElementById('question-image');
             const imgCaption = document.getElementById('image-caption');
@@ -282,7 +376,7 @@
                 imgContainer.classList.add('hidden');
             }
 
-            // Phương án
+            // Nạp đáp án A B C D
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = '';
             
@@ -344,7 +438,7 @@
             document.getElementById('next-btn').classList.remove('hidden');
         }
 
-        // CHUYỂN CÂU HỎI & KẾT THÚC VÒNG CHƠI
+        // CHUYỂN CÂU HỎI HOẶC HOÀN THÀNH GAME
         function nextQuestion() {
             currentIdx++;
             if (currentIdx < activeQuestions.length) {
@@ -353,7 +447,7 @@
                 clearInterval(timerInterval);
 
                 if (typeof confetti === 'function') {
-                    confetti({ particleCount: 160, spread: 100, origin: { y: 0.6 } });
+                    confetti({ particleCount: 180, spread: 110, origin: { y: 0.6 } });
                 }
 
                 const maxScore = activeQuestions.length * 10;
@@ -372,25 +466,25 @@
                     badgeIcon = "📚";
                 }
 
-                document.getElementById('quiz-container').innerHTML = `
-                    <div class="text-center py-8 bg-amber-50/60 rounded-2xl border-2 border-amber-300 shadow-lg">
+                document.getElementById('quiz-tab').innerHTML = `
+                    <div class="text-center py-8 bg-amber-50/70 rounded-3xl border-2 border-amber-300 shadow-xl">
                         <div class="text-6xl mb-3 leading-none">${badgeIcon}</div>
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-hue mb-2">🎉 Hoàn thành Thử thách Bài học!</h2>
-                        <div class="inline-block bg-hue text-gold font-bold px-5 py-2 rounded-full text-base md:text-lg mb-4 shadow border border-yellow-400">
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-hue mb-2">🎉 Hoàn thành Thử thách Bài học!</h3>
+                        <div class="inline-block bg-hue text-gold font-bold px-6 py-2 rounded-full text-base md:text-lg mb-4 shadow-lg border border-yellow-400">
                             ${badgeTitle}
                         </div>
                         <p class="text-lg md:text-xl mb-6 text-gray-800">
                             Tổng điểm đạt được: <span class="font-extrabold text-red-700 text-2xl">${score}</span> / ${maxScore} điểm
                         </p>
-                        <button onclick="startQuiz()" class="bg-hue hover:bg-red-900 text-gold font-bold px-8 py-3 rounded-2xl text-lg transition duration-200 shadow-xl transform hover:scale-105">
-                            Thử thách lại Chủ đề này 🔄
+                        <button onclick="location.reload()" class="bg-hue hover:bg-red-900 text-gold font-bold px-8 py-3.5 rounded-2xl text-lg transition duration-200 shadow-xl transform hover:scale-105">
+                            Thử thách lại Chủ đề khác 🔄
                         </button>
                     </div>
                 `;
             }
         }
 
-        // BẬT TẮT ÂM THANH
+        // BẬT / TẮT NHẠC NỀN CỐ ĐÔ
         function toggleAudio() {
             const text = document.getElementById('music-text');
             if (isMuted) {
